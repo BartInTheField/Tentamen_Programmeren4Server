@@ -1,0 +1,22 @@
+/**
+ * Created by Niels on 6/13/2017.
+ */
+var mysql = require('mysql');
+var config = require('./config.json')
+var pool = mysql.createPool({
+    "connectionLimit": 50,
+    "host": config.host,
+    "user": config.user,
+    "password": config.password,
+    "database": config.database
+});
+
+pool.getConnection(function (err) {
+    if (err) {
+        throw err;
+    } else {
+        console.log('Connected to database');
+    }
+})
+
+module.exports = pool;
