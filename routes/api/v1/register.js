@@ -8,10 +8,13 @@ var bcrypt = require('bcrypt');
 var pool = require('../../../db/connection');
 
 router.route
-    .post('/login',function(req,res){
+    .post('/register',function(req,res){
 
         var email = req.body.email || '';
         var password = req.body.password || '';
+
+        var salt = bcrypt.genSaltSync(10);
+        var passwordHash = bcrypt.hashSync(password, salt);
 
         //TODO: Make query with the right tables.
         var queryString = '';
@@ -20,7 +23,7 @@ router.route
             if(err){
                 throw err;
             }else{
-                //TODO: Execute login query
+                //TODO: Execute register query
             }
         });
     });
