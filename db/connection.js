@@ -11,12 +11,4 @@ var pool = mysql.createPool({
     "database": config.database
 });
 
-pool.getConnection(function (err) {
-    if (err) {
-        throw err;
-    } else {
-        console.log('Connected to database');
-    }
-})
-
 module.exports = pool;
