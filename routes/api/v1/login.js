@@ -23,7 +23,7 @@ router.route('/login')
                 connection.query(queryString, function (err, rows) {
                     connection.release();
                     if (err) {
-                        res.status(400);
+                        res.status(401);
                     } else {
                         console.log(rows);
                         if (rows.length > 0) {
@@ -32,10 +32,10 @@ router.route('/login')
                                     "token": auth.encodeToken(email), 
                                     "email": email });
                             } else {
-                                res.status(401);
+                                res.status(400);
                             }
                         } else {
-                            res.status(401);
+                            res.status(400);
                         }
                     }
                 })
