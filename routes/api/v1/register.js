@@ -38,6 +38,7 @@ router.route('/register')
                             })
                         }else{
                             connection.query(queryString,function(err){
+                                connection.release();
                                 if(err){
                                     res.status(401);
                                 } else{
