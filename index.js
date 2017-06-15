@@ -3,11 +3,16 @@
  */
 var express = require('express');
 var app = express();
+var bodyparser = require('body-parser');
+
 
 //Set the app port
 app.set('port', process.env.PORT || 8080);
 
-app.use('/api/v1', require('./routes/api/v1/login'));
+
+app.use(bodyparser.urlencoded({ extended:true }));
+app.use(bodyparser.json());
+//app.use('/api/v1', require('./routes/api/v1/login'));
 app.use('/api/v1', require('./routes/api/v1/register'));
 app.use('/api/v1', require('./routes/api/v1/films'));
 app.use('/api/v1', require('./routes/api/v1/rentals'));
