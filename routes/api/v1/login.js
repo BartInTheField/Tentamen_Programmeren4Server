@@ -30,7 +30,10 @@ router.route('/login')
                             if (bcrypt.compareSync(password, rows[0].password)) {
                                 res.status(200).json({ 
                                     "token": auth.encodeToken(email), 
-                                    "email": email });
+                                    "ID" : rows[0].customer_id,
+                                    "email": rows[0].email,
+                                    "firstname" : rows[0].first_name,
+                                    "lastname" : rows[0].last_name});
                             } else {
                                 res.status(400).json({
                                     "Response" : "Invalid credentials"
