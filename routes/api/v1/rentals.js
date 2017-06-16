@@ -37,6 +37,7 @@ router.route('/rentals/:userid')
                     console.log(err);
                 } else {
                     connection.query(querystr, function(err, rows) {
+                        connection.release();
                         if (err) {
                             console.log(err);
                             res.status(401);
