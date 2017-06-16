@@ -24,7 +24,7 @@ router.all('*', function(req, res, next){
 
 router.route('/rentals/:userid')
     .get(function(req,res){
-        var userid = req.params.userid
+        var userid = req.params.userid;
 
         var querystr = "SELECT `film`.*, `rental`.return_date FROM `film` INNER JOIN `inventory` " +
         "ON `inventory`.film_id = `film`.film_id INNER JOIN `rental` " +
@@ -57,5 +57,54 @@ router.route('/rentals/:userid')
             });
         }
     });
+
+router.route('/rentals/:userid/:inventoryid')
+    .post(function(req,res){
+        var userid = req.params.userid;
+        var inventoryid = req.params.inventoryid;
+
+        var selectAllStr = "SELECT inventory_id FROM `rental` WHERE inventory_id ="+inventoryid+";"
+
+        var querystr = "INSERT INTO `rental` (rental_date, inventory_id, customer_id, return_date, last_update) "
+            + "VALUES (NOW(), "+inventoryid+", "+userid+", NOW() + INTERVAL 7 DAY, NOW());";
+
+        if(userid && inventoryid){
+            pool.getConnection(function (err, connection){
+                if(err){
+                    console.log(err);
+                } else {
+                    connection.query(selectAllStr, function(err, rows){
+                       if(err){
+                           console.log(err);
+                       }else{
+                         if(rows.length > 0){
+                             connection.release();
+                             res.status(401).json({
+                                "Response" : "This copy is already rented by a customer"
+                             });
+                         }  else{
+                             connection.query(querystr, function(err) {
+                                 connection.release();
+                                 if (err) {
+                                     console.log(err);
+                                     res.status(401);
+                                 } else {
+                                     res.status(201).json({
+                                         "Response" : "Created rental succesfully"
+                                     });
+                                 }
+                             })
+                         }
+                       }
+                    });
+                }
+            });
+        }else{
+            res.status(400).json({
+                "Response" : "Bad request"
+            });
+        }
+    });
+
 
 module.exports = router;
