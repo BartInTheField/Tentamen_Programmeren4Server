@@ -15,6 +15,7 @@ app.use(bodyparser.json());
 app.use('/api/v1', require('./routes/api/v1/login'));
 app.use('/api/v1', require('./routes/api/v1/register'));
 app.use('/api/v1', require('./routes/api/v1/films'));
+app.use('/api/v1', require('./routes/api/v1/copies'));
 app.use('/api/v1', require('./routes/api/v1/rentals'));
 
 
