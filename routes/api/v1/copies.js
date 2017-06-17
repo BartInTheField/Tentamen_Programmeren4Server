@@ -11,7 +11,7 @@ router.route('/copies/:filmid')
     .get(function(req,res){
         var filmid = req.params.filmid;
 
-        var queryString = "SELECT * FROM `inventory` WHERE `inventory`.`inventory_id` NOT IN (SELECT `inventory_id` FROM `rental`) AND `film_id` = "+filmid+";";
+        var queryString = "SELECT inventory.* , rental.active FROM inventory INNER JOIN rental ON inventory.inventory_id = rental.inventory_id WHERE film_id = "+filmid+";";
 
         pool.getConnection(function (err, connection) {
             if (err) {
