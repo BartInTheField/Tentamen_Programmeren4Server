@@ -22,3 +22,5 @@ app.use('/api/v1', require('./routes/api/v1/rentals'));
 app.listen(app.get('port'), function(){
    console.log('Server is running on ' + app.get('port'));
 });
+
+module.exports = app;
