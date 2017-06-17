@@ -179,10 +179,11 @@ router.route('/rentals/:userid/:inventoryid')
                    } else {
                        connection.query(querystr, function(err, rows){
                            if(err){
+                               res.status(400);
                                console.log(err)
                            } else {
                                res.status(200).json({
-                                   "Response" : "Rental deleted "
+                                   "Response" : "Rental deleted"
                                })
                            }
                        })
