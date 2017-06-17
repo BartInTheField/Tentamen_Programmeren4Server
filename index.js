@@ -18,6 +18,10 @@ app.use('/api/v1', require('./routes/api/v1/films'));
 app.use('/api/v1', require('./routes/api/v1/copies'));
 app.use('/api/v1', require('./routes/api/v1/rentals'));
 
+app.get('*',function(req, res){
+   res.status(404).send("404 - Page not found");
+});
+
 
 app.listen(app.get('port'), function(){
    console.log('Server is running on ' + app.get('port'));
