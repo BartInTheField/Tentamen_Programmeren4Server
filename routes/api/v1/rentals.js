@@ -122,7 +122,7 @@ router.route('/rentals/:userid/:inventoryid')
                        if(err){
                            console.log(err)
                        } else {
-                           res.status(201).json({
+                           res.status(200).json({
                                "Response" : "Rental updated"
                            })
                        }
@@ -139,22 +139,22 @@ router.route('/rentals/:userid/:inventoryid')
 
         var querystr = "DELETE FROM `rental` WHERE `customer_id` = " + userid + " AND `inventory_id` = " + inventoryid +";";
 
-       if(userid && inventoryid){
-           pool.getConnection(function (err, connection){
-               if(err){
-                   console.log(err)
-               } else {
-                   connection.query(querystr, function(err, rows){
-                       if(err){
-                           console.log(err)
-                       } else {
-                           res.status(201).json({
-                               "Response" : "Rental deleted "
-                           })
-                       }
-                   })
-               }
-           })
+           if(userid && inventoryid){
+               pool.getConnection(function (err, connection){
+                   if(err){
+                       console.log(err)
+                   } else {
+                       connection.query(querystr, function(err, rows){
+                           if(err){
+                               console.log(err)
+                           } else {
+                               res.status(200).json({
+                                   "Response" : "Rental deleted "
+                               })
+                           }
+                       })
+                   }
+               })
        }
     });
 
