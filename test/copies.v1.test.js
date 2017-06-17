@@ -21,7 +21,7 @@ describe('Copies API V1', function(){
     });
 
 
-    it('gives status: 400 on GET /api/v1/films/filmid: with a filmid that does not exist', function(done) {
+    it('gives status: 400 on GET /api/v1/films/:filmid with a filmid that does not exist', function(done) {
         chai.request(require('../index.js'))
         .get('/api/v1/copies/2314')
         .end(function(err, res) {
