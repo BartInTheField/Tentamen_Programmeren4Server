@@ -4,8 +4,8 @@
   "description": "Server for the movie rental exam",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,5 +24,10 @@
     "jwt-simple": "^0.5.1",
     "moment": "^2.18.1",
     "mysql": "^2.13.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.2"
   }
 }
