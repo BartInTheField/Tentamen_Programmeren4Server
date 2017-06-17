@@ -106,5 +106,31 @@ router.route('/rentals/:userid/:inventoryid')
         }
     });
 
+    router.route('/rentals/:userid/:inventoryid')
+    .put(function(req,res){
+        var userid = req.params.userid;
+        var inventoryid = req.params.inventoryid;
+
+        var querystr = "UPDATE `rental` SET `active`='0' WHERE `customer_id` = " + userid + " AND `inventory_id` = " + inventoryid +";";
+
+       if(userid && inventoryid){
+           pool.getConnection(function (err, connection){
+               if(err){
+                   console.log(err)
+               } else {
+                   connection.query(querystr, function(err, rows){
+                       if(err){
+                           console.log(err)
+                       } else {
+                           res.status(201).json({
+                               "Response" : "Rental updated"
+                           })
+                       }
+                   })
+               }
+           })
+       }
+    });
+
 
 module.exports = router;
