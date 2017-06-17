@@ -49,7 +49,31 @@ router.route('/films')
 
 router.route('/films/:filmid')
     .get(function(req,res){
+        var filmid = req.params.filmid;
 
+        var queryString = "SELECT * FROM `film` WHERE film_id = "+filmid+";";
+
+        pool.getConnection(function (err, connection) {
+            if (err) {
+                console.log(err);
+            } else {
+                connection.query(queryString, function (err, rows) {
+                    connection.release();
+                    if(err){
+                        console.log(err);
+                        res.status(401);
+                    }else{
+                        if(rows.length > 0){
+                            res.status(200).json(rows[0]);
+                        }else{
+                            res.status(400).json({
+                                "Response" : "Can't find movie with this id."
+                            });
+                        }
+                    }
+                })
+            }
+        });
     });
 
 module.exports = router;
