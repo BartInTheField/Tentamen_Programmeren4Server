@@ -22,13 +22,45 @@ router.all('*', function(req, res, next){
    });
 });
 
+
+router.route('/rentals/activeRentals')
+    .get(function(req,res){
+
+        var querystr = "SELECT inventory_id FROM rental WHERE `active` = 1;";
+
+        pool.getConnection(function (err, connection){
+            if(err){
+                console.log(err);
+            } else {
+                connection.query(querystr, function(err, rows) {
+                    connection.release();
+                    if (err) {
+                        console.log(err);
+                        res.status(401);
+                    } else {
+                        if(rows.length > 0){
+                            res.status(200).json({
+                                "Active" : rows
+                            });
+                        } else {
+                            res.status(400).json({
+                                "Response" : "Bad request"
+                            });
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+
 router.route('/rentals/:userid')
     .get(function(req,res){
         var userid = req.params.userid;
 
         var querystr = "SELECT `film`.*, `rental`.return_date, `inventory`.inventory_id FROM `film` INNER JOIN `inventory` " +
         "ON `inventory`.film_id = `film`.film_id INNER JOIN `rental` " +
-        "ON `rental`.inventory_id = `inventory`.inventory_id " + 
+        "ON `rental`.inventory_id = `inventory`.inventory_id " +
         "WHERE `rental`.customer_id = " + userid +" AND `rental`.active = 1;";
 
         if(userid){
@@ -57,6 +89,7 @@ router.route('/rentals/:userid')
             });
         }
     });
+
 
 router.route('/rentals/:userid/:inventoryid')
     .post(function(req,res){
