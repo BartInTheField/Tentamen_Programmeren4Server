@@ -63,10 +63,10 @@ router.route('/rentals/:userid/:inventoryid')
         var userid = req.params.userid;
         var inventoryid = req.params.inventoryid;
 
-        var selectAllStr = "SELECT inventory_id FROM `rental` WHERE inventory_id ="+inventoryid+";"
+        var selectAllStr = "SELECT inventory_id FROM `rental` WHERE inventory_id ="+inventoryid+" AND active= 1;"
 
-        var querystr = "INSERT INTO `rental` (rental_date, inventory_id, customer_id, return_date, last_update) "
-            + "VALUES (NOW(), "+inventoryid+", "+userid+", NOW() + INTERVAL 7 DAY, NOW());";
+        var querystr = "INSERT INTO `rental` (rental_date, inventory_id, customer_id, return_date, last_update, active) "
+            + "VALUES (NOW(), "+inventoryid+", "+userid+", NOW() + INTERVAL 7 DAY, NOW(), 1);";
 
         if(userid && inventoryid){
             pool.getConnection(function (err, connection){
