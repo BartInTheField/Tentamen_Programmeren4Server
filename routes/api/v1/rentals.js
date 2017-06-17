@@ -26,7 +26,7 @@ router.route('/rentals/:userid')
     .get(function(req,res){
         var userid = req.params.userid;
 
-        var querystr = "SELECT `film`.*, `rental`.return_date FROM `film` INNER JOIN `inventory` " +
+        var querystr = "SELECT `film`.*, `rental`.return_date, `inventory`.inventory_id FROM `film` INNER JOIN `inventory` " +
         "ON `inventory`.film_id = `film`.film_id INNER JOIN `rental` " +
         "ON `rental`.inventory_id = `inventory`.inventory_id " + 
         "WHERE `rental`.customer_id = " + userid +";";
