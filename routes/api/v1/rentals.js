@@ -29,7 +29,7 @@ router.route('/rentals/:userid')
         var querystr = "SELECT `film`.*, `rental`.return_date, `inventory`.inventory_id FROM `film` INNER JOIN `inventory` " +
         "ON `inventory`.film_id = `film`.film_id INNER JOIN `rental` " +
         "ON `rental`.inventory_id = `inventory`.inventory_id " + 
-        "WHERE `rental`.customer_id = " + userid +";";
+        "WHERE `rental`.customer_id = " + userid +" AND `rental`.active = 1;";
 
         if(userid){
             pool.getConnection(function (err, connection){
