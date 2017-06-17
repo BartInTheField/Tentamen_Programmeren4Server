@@ -4,6 +4,7 @@
   "description": "Server for the movie rental exam",
   "main": "index.js",
   "scripts": {
+    "prepublish": "mocha",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
